@@ -1,13 +1,49 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        // Create the main frame
+        JFrame frame = new JFrame("Word Counter");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLayout(new FlowLayout());
 
-        for (int i = 1; i <= 15; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        // Create a text area for input
+        JTextArea textArea = new JTextArea(10, 30);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        frame.add(scrollPane);
+
+        // Create a button to count words
+        JButton countButton = new JButton("Count Words");
+        frame.add(countButton);
+
+        // Create a label to display the word count
+        JLabel wordCountLabel = new JLabel("Word Count: 0");
+        frame.add(wordCountLabel);
+
+        // Add action listener to the button
+        countButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = textArea.getText();
+                int wordCount = countWords(text);
+                wordCountLabel.setText("Word Count: " + wordCount);
+            }
+        });
+
+        // Make the frame visible
+        frame.setVisible(true);
+    }
+
+    // Method to count words in a string
+    private static int countWords(String text) {
+        if (text == null || text.isEmpty()) {
+            return 0;
         }
+        String[] words = text.trim().split("\\s+");
+        return words.length;
     }
 }
